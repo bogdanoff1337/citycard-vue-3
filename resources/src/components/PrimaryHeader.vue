@@ -6,7 +6,7 @@
         
       </li>
       <li v-if="isAuthenticated" class="nav-link">
-        <a href="/card/add">Додати картку</a>
+        <a >Додати картку</a>
       </li>
       <li v-if="isAuthenticated && user?.role === 'admin'" class="nav-link">
         <router-link to="/dashboard">Dashboard</router-link>

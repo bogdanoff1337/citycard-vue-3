@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\CityController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +19,6 @@ Route::post('/api/login', [RegisterController::class, 'login']);
 Route::post('/api/logout', [RegisterController::class,'logout']);
 Route::get('/api/check-auth', [RegisterController::class, 'checkAuth']);
 Route::get('{any?}', fn () => view('app'))->where('any', '.*');
+
+
+Route::get('/get-sity', [CityController::class, 'index']);
