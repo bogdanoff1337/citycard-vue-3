@@ -1,6 +1,7 @@
 import Login from '../pages/Login.vue';
 import Home from '../pages/Home.vue';
 import Register from '../pages/Register.vue';
+import Dashbord from '../pages/admin/dashbord.vue';
 
 const routes = [
 
@@ -20,6 +21,12 @@ const routes = [
     path: '/Login',
     name: 'Login',
     component: Login,
+  },
+
+  {
+    path: '/dashbord',
+    name: 'Dashbord',
+    component: Dashbord,
   },
 
 
