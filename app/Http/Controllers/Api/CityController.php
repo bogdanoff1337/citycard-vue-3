@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\City;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\City;
 
 class CityController extends Controller
 {
-    public function index()
+    public function show()
     {
         $cities = City::all();
-        return view('cities.index', compact('cities'));
+        dd($cities);
     }
 
-
-
-    public function store(Request $request)
+    public function store(City $request)
     {
-        City::create($request->all());
-        return redirect()->route('cities.index');
+        $city = City::create();
+        return new City($city);
     }
-
 
     public function update(Request $request, City $city)
     {

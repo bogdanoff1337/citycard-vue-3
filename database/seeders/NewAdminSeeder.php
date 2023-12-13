@@ -15,7 +15,7 @@ class NewAdminSeeder extends Seeder
     {
         DB::table('users')->insert([
             'login' => 'Admin',
-            'phone' => '380',
+            'phone' => '3801',
             'password'=> Hash::make('12345678'),
             'role' => 'admin',
         ]);
