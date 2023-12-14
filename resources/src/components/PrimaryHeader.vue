@@ -3,7 +3,7 @@
     <ul class="nav-links">
       <li class="nav-link">
         <router-link class="upward" to="/">Home</router-link>
-        
+
       </li>
       <li v-if="isAuthenticated" class="nav-link">
         <a >Додати картку</a>
@@ -32,7 +32,7 @@ export default defineComponent({
   data() {
     return {
       isAuthenticated: false,
-      user: null as null | { role: string }, 
+      user: null as null | { role: string },
     };
   },
   mounted() {
@@ -47,7 +47,7 @@ export default defineComponent({
           this.user = response.data.user;
           sessionStorage.setItem('user', JSON.stringify(this.user));
 
-          this.$router.push({ path: '/' }).catch(err => {});
+
         }
       } catch (error) {
         console.error(error);
@@ -68,7 +68,7 @@ export default defineComponent({
         console.error('Error during logout:', error);
       }
     },
-    
+
   },
 });
 
@@ -91,6 +91,7 @@ export default defineComponent({
   padding: 20px 15px;
   border-radius: 12px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .nav-links li {

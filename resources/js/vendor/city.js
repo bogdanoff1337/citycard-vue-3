@@ -23,7 +23,7 @@ export default function useCities() {
         errors.value = ''
         try {
             await axios.post('/api/cities', data)
-            await router.push({ name: 'cities.index' })
+            location.reload();
         } catch (e) {
             if (e.response.status === 422) {
                 for (const key in e.response.data.errors) {
@@ -38,7 +38,7 @@ export default function useCities() {
         errors.value = ''
         try {
             await axios.patch(`/api/cities/${id}`, city.value)
-            await router.push({ name: 'cities.index' })
+            location.reload();
         } catch (e) {
             if (e.response.status === 422) {
                 for (const key in e.response.data.errors) {

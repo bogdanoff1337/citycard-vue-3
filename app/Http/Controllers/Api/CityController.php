@@ -34,7 +34,7 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
-        return new CityRequest($city);
+        return new CityRequest($city->toArray());
     }
 
     /**

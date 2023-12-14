@@ -1,27 +1,30 @@
 <template>
     <div>
-      <form @submit.prevent="saveCity">
-        <label for="name">City Name:</label>
-        <input name="name" type="text" id="name" v-model="form.name" required />
+      <form  v-on:submit.prevent="saveCity">
 
-        <button type="submit">Add City</button>
+        <label for="name">City Name:</label>
+        <input name="name" type="text" id="name" v-model="city.name" required />
+
+        <button type="submit">Update City</button>
       </form>
     </div>
   </template>
 
 <script setup>
 import useCities from '../../../js/vendor/city.js'
-import { reactive } from 'vue'
+import { onMounted } from 'vue';
 
-
-const form = reactive({
-    name: '',
+const { errors, city, updateCity, getCity } = useCities()
+const props = defineProps({
+    id: {
+        required: true,
+        type: String
+    }
 })
 
-const {  storeCity } = useCities()
-
+onMounted(() => getCity(props.id))
 
 const saveCity = async () => {
-    await storeCity({ ...form })
+    await updateCity(props.id)
 }
 </script>

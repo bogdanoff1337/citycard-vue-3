@@ -37,7 +37,7 @@ export default {
           this.isAuthenticated = true;
           this.user = response.data.user;
 
-          
+
 
           window.location.reload('/Home');
           this.$emit('login', { isAuthenticated: this.isAuthenticated, user: this.user });
