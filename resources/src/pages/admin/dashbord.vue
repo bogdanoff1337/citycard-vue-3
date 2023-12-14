@@ -1,5 +1,5 @@
 <template>
-  
+
     <div class="d-flex justify-content-center">
         <div class="dropdown">
             <button class="btn-custom dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -23,7 +23,7 @@
             </ul>
         </div>
 
-    
+
     </div>
     <ShowCity v-if="showCity" :cities="cities" />
 
@@ -32,16 +32,15 @@
       <AddTypeForm v-if="showAddTypeForm" @typeAdded="onTypeAdded" />
       <AddTransportForm v-if="showAddTransportForm" @transportAdded="onTransportAdded" />
   </template>
-  
+
   <script lang="ts">
   import { defineComponent } from 'vue';
 
-import axios from 'axios';
 
   import AddCityForm from './AddCityForm.vue';
   import AddTypeForm from './AddTypeForm.vue';
   import AddTransportForm from './AddTransportForm.vue';
-  
+
   import ShowCity from './ShowCity.vue';
 
 
@@ -61,34 +60,38 @@ import axios from 'axios';
         showType: false,
         showTransport: false,
         cities: [],
+        activeMenu: null,
       };
     },
-    mounted() {
-    this.fetchCities();
-  },
+
     methods: {
-        fetchCities() {
-      axios.get('/api/cities')
-        .then(response => {
-          this.cities = response.data;
-        })
-        .catch(error => {
-          console.error('Error fetching cities:', error);
-        });
-    },
-        toggleShow(formType: string) {
-        this.showCity = formType === 'ShowCity' && !this.showCity;
-        this.showType = formType === 'ShowType' && !this.showType;
-        this.showTransport = formType === 'ShowTransport' && !this.showTransport;
-      },
-
-
-
-      toggleForm(formType: string) {
-        this.showAddCityForm = formType === 'city' && !this.showAddCityForm;
-        this.showAddTypeForm = formType === 'type' && !this.showAddTypeForm;
-        this.showAddTransportForm = formType === 'transport' && !this.showAddTransportForm;
-      },
+        resetForms() {
+    this.showAddCityForm = false;
+    this.showAddTypeForm = false;
+    this.showAddTransportForm = false;
+    this.showCity = false;
+    this.showType = false;
+    this.showTransport = false;
+  },
+  toggleShow(formType: string) {
+    this.resetForms();
+    if (formType === 'ShowCity') {
+      this.showCity = true;
+    } else if (formType === 'ShowType') {
+      this.showType = true;
+    } else if (formType === 'ShowTransport') {
+      this.showTransport = true;
+    }
+  },
+  toggleForm(formType: string) {
+    this.resetForms();
+    if (formType === 'city') {
+      this.showAddCityForm = true;
+    } else if (formType === 'type') {
+      this.showAddTypeForm = true;
+    } else if (formType === 'transport') {
+      this.showAddTransportForm = true;
+  }},
       onCityAdded() {
         console.log('City added successfully!');
       },
@@ -101,13 +104,13 @@ import axios from 'axios';
     },
   });
   </script>
-  
+
   <style lang="less" scoped>
   .btn-group {
     display: flex;
     align-items: center;
   }
-  
+
   button {
     color: #fff;
   }
@@ -128,6 +131,5 @@ import axios from 'axios';
 .dropdown-item{
  cursor: pointer;
 }
-  
+
   </style>
-  

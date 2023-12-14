@@ -3,32 +3,57 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Resources\CityResource;
+use App\Http\Requests\CityRequest;
 use App\Models\City;
+use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
-    public function show()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $cities = City::all();
-        dd($cities);
+        return CityResource::collection(City::paginate(5));
     }
 
-    public function store(City $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(CityRequest $request)
     {
-        $city = City::create();
-        return new City($city);
+        $city = City::create($request->validated());
+
+        return new CityResource($city);
     }
 
-    public function update(Request $request, City $city)
+    /**
+     * Display the specified resource.
+     * @param \App\Models\City $city
+     */
+    public function show(City $city)
     {
-        $city->update($request->all());
-        return redirect()->route('cities.index');
+        return new CityRequest($city);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(CityRequest $request, City $city)
+    {
+        $city->update($request->validate());
+
+        return new CityResource($city);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(City $city)
     {
         $city->delete();
-        return redirect()->route('cities.index');
+
+        return response()->noContent();
     }
 }

@@ -25,5 +25,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/sity', [CityController::class, 'show']);
 
 
-Route::post('/storeCity', [CityController::class, 'store']);
-
+Route::apiResource('cities', CityController::class);

@@ -1,29 +1,65 @@
 <template>
-    <div>
-      <h2>Список міст</h2>
-      <ul>
-        <li v-for="city in cities" :key="city.id">{{ city.name }}</li>
-      </ul>
-    </div>
-  </template>
+<div class="d-flex justify-content-center">
+    <table class="table table-warning mx-auto">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">name</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="city in cities" :key="city.id">
+        <th scope="row">{{ city.id }}</th>
+        <td>{{ city.name }}</td>
+        <td><a class="btn btn-update" @click="toggleShow('UpdateCity')">Update</a></td>
+        <td><button @click="deleteCity(city.id)"
+            class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25">
+            Delete</button></td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+</template>
 
 <script setup>
-import useCity from '../../../js/vendor/city.js'
-import { reactive } from 'vue'
+import useCities from '../../../js/vendor/city.js'
+import { onMounted } from 'vue';
 
 
-const form = reactive({
-    cityName: '',
-})
-
-const {  storeCity } = useCity()
+const { cities, getCities, destroyCity  } = useCities()
 
 
-const saveCity = async () => {
-    await storeCity({ ...form })
+const deleteCity = async (id) => {
+    if (!window.confirm('You sure?')) {
+        return
+    }
+
+    await destroyCity(id)
+    await getCities()
 }
+    onMounted(getCities)
+
 </script>
 
   <style scoped>
+
+  .table{
+
+    width: 50%;
+  }
+
+  .btn-update {
+    background-color: #2b39ff;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    margin: 10px;
+    border-radius: 0; /* або видаліть цей рядок, якщо не хочете округлення */
+}
 
   </style>
